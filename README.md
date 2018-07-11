@@ -1,1 +1,1 @@
-# pearl-causality
+Repo to hold slides created for pedagogy covery Pearl's approach to causality.
