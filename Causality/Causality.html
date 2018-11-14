@@ -4,7 +4,7 @@
     <title>Causality</title>
     <meta charset="utf-8">
     <meta name="author" content="Jeremy Albright" />
-    <meta name="date" content="2018-07-13" />
+    <meta name="date" content="2018-11-13" />
     <script src="Causality_files/htmlwidgets/htmlwidgets.js"></script>
     <script src="Causality_files/viz/viz.js"></script>
     <link href="Causality_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
@@ -18,7 +18,7 @@ class: center, middle, inverse, title-slide
 
 # Causality
 ### Jeremy Albright
-### July 13, 2018
+### November 13, 2018
 
 ---
 
@@ -39,7 +39,7 @@ Statistics class in the 20th Century
  - But then, implicitly, suggest that the association is causal.
  - Example: Voters policy positions are _congruent_ with positions of parties.
     - Do parties respond to the demands of voters? (Think High School Civics-view of democracy)
-    - Do voters update their policy positions to match their preferred party (think of Fox News viewers evaluations of Russia)
+    - Do voters update their policy positions to match their preferred party (think of Fox News viewers evaluations of North Korea)
     - Who cares!?!?! The two seem to move together!  We have _congruence_!
     
 ---
@@ -99,9 +99,9 @@ The key assumption is `\(Y_{i0}, Y_{i1} \perp\!\!\!\perp D_i\)`.
 
 From Pearl (2018, pg. 279-280): 
 
-&lt;blockquote&gt;
-"Unfortunately, I have yet to find a single person who can explain what ignorability means in a language spoken by those who need to make this assumption or assess its plausibility in a given problem...If you think this sounds circular, I agree with you!"
-&lt;/blockquote&gt;
+
+&gt; "Unfortunately, I have yet to find a single person who can explain what ignorability means in a language spoken by those who need to make this assumption or assess its plausibility in a given problem...If you think this sounds circular, I agree with you!"
+
 
 ---
 
@@ -109,7 +109,7 @@ From Pearl (2018, pg. 279-280):
 
 A different orientation - though one that often leads to similar estimators - is attributed to Judea Pearl and based on _structural causal models_ (SCMs).
 
-SCMs are graphs with nodes, directed edges, and functions mappting exogenous variables to endogenous ones.  Denote `\(U\)` as the set of exogenous variables, `\(V\)` as the set of endogenous variables, and `\(F\)` as the set of functions mapping `\(U\)` to `\(V\)`.  
+SCMs are graphs with nodes, directed edges, and functions mapping exogenous variables to endogenous ones.  Denote `\(U\)` as the set of exogenous variables, `\(V\)` as the set of endogenous variables, and `\(F\)` as the set of functions mapping `\(U\)` to `\(V\)`.  
 
 A concrete example is:
 
@@ -126,10 +126,10 @@ where `\(f_z\)` is the function mapping `\(X\)` and `\(Y\)` onto `\(Z\)`.
 
 This definition implies the following graph:
 
-<div id="htmlwidget-82d1e239c3a761e77dc8" style="width:144px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-82d1e239c3a761e77dc8">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext]\n    X; Y; Z\n\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9cb875e59a65157150fd" style="width:144px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9cb875e59a65157150fd">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext]\n    X; Y; Z\n\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
-The arrows represent association only, the actually function mapping `\(X\)` and `\(Y\)` onto `\(Z\)` can be anything we like.
+The arrows represent a generic causal relationship only, the actual function mapping `\(X\)` and `\(Y\)` onto `\(Z\)` can be anything we like.
 
 
 These types of figures should be familiar to anybody who has previously encounted structural equation models (SEMs) in applied statistics.  The primary difference is that SEMs are parametric, typically assuming a linear relationship: 
@@ -144,8 +144,8 @@ We get around functional forms by talking about the variables in terms of joint 
 
 Take the following graph:
 
-<div id="htmlwidget-50826cc432b8c1682175" style="width:288px;height:36px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-50826cc432b8c1682175">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n           fontsize = 25]\n\n    X; Y; Z\n\n    X->Y\n    Y->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ee28a99399cc3178ae07" style="width:288px;height:36px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ee28a99399cc3178ae07">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n           fontsize = 25]\n\n    X; Y; Z\n\n    X->Y\n    Y->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 Any (acyclic) graph has a joint distribution that is defined by multiplying all conditional probabilities, where conditioning is performed on the direct parent.
 
@@ -161,13 +161,13 @@ Understanding the conditional probabilities implied by a model will enable us to
 
 No, you should not control for everything.  In fact, depending on the causal model, some variables should explicitly _not_ be controlled for.  We'll start out with when you _should_ control for a non-treatment variable.  Take the following graph:
 
-<div id="htmlwidget-9114e56cf996a58cf565" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9114e56cf996a58cf565">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           layout = neato]\n    node [shape = plaintext,\n           rankdir = LR,\n           fontsize = 20]\n    Y; X; Z\n\n    X->Z\n    Y->X\n    Y->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cf295a3731fb1b7aa6d7" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cf295a3731fb1b7aa6d7">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           layout = neato]\n    node [shape = plaintext,\n           rankdir = LR,\n           fontsize = 20]\n    Y; X; Z\n\n    X->Z\n    Y->X\n    Y->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 We wish to know the effect of `\(X\)` on `\(Z\)`, but `\(Y\)` is a common cause.  Let's say we could intervene in the world to set `\(X\)` at a given value.  By doing so, we'd be removing the effect of `\(Y\)` on `\(X\)` and would be left with:
 
-<div id="htmlwidget-d83d749ddb5c7ac61154" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d83d749ddb5c7ac61154">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           layout = neato]\n    node [shape = plaintext,\n          fontsize = 20]\n    Y; X; Z\n\n    X->Z\n    Y->Z\n\n    edge [color = transparent]\n    Y->X\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-425ab9d5d396f58f0435" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-425ab9d5d396f58f0435">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           layout = neato]\n    node [shape = plaintext,\n          fontsize = 20]\n    Y; X; Z\n\n    X->Z\n    Y->Z\n\n    edge [color = transparent]\n    Y->X\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -181,24 +181,25 @@ We want to know the effect of `\(X\)` on `\(Z\)` if we could intervene on `\(X\)
 
 Based on the intervention SCM,
 
-`\(P(Z = z \mid do(X = x)) = \sum_z P(Y = y \mid Y = y, X = x)P(Y = y)\)`
+`\(P(Z = z \mid do(X = x)) = \sum_z P(Z = z \mid Y = y, X = x)P(Y = y)\)`
 
 This is true because `\(P(Z = z \mid do(X = x))\)` is what we get after integrating out `\(Y\)`.  
 
-But we know from comparing the graphs that `\(P(Y = y \mid Z = z, X = x)\)` and `\(P(Y = y)\)` are the same in both worlds.  Thus, we can identify the causal effect from a world with intervention by the data we get from the the actual world.
+But we know from comparing the graphs that `\(P(Z = z \mid Y = y, X = x)\)` and `\(P(Y = y)\)` are the same in both worlds.  Thus, we have all the information we need to calculate a causal effect such as.
 
+`\(P(Z = z \mid do(X = 1)) - P(Z = z \mid do(X = 0))\)`
 ---
 
 Take a slightly more complicated model:
 
 
-<div id="htmlwidget-871339ca608bc0758658" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-871339ca608bc0758658">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext,\n          fontsize = 20]\n    W; X; Y; Z\n    \n    edge [dir = forward]\n    W->{X,Y}\n\n    edge [dir = forward]\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7b53ba6f50ce354d8f29" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b53ba6f50ce354d8f29">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext,\n          fontsize = 20]\n    W; X; Y; Z\n    \n    edge [dir = forward]\n    W->{X,Y}\n\n    edge [dir = forward]\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 There are now two paths from `\(X\)` to `\(Z\)`:
 
 1. `\(X \rightarrow Z\)`
-2. `\(X \rightarrow W \leftarrow Z\)`
+2. `\(X \leftarrow W \rightarrow Y \rightarrow Z\)`
 
 These are read from left to right regardless of the direction of the arrows.  However, the arrows identify the second path as a _backdoor path_ because there is an arrow leading into `\(X\)`.  
 
@@ -223,8 +224,8 @@ The key is that, by blocking a backdoor path, we remove the spurious association
 
 Now let's flip the top arrows.
 
-<div id="htmlwidget-7f48d8add368b7279a05" style="width:144px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7f48d8add368b7279a05">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext,\n          fontsize = 20]\n    W; X; Y; Z\n    \n    edge [dir = back]\n    W->{X,Y}\n\n    edge [dir = forward]\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dfcb8fc78f602ee07517" style="width:144px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dfcb8fc78f602ee07517">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent]\n    node [shape = plaintext,\n          fontsize = 20]\n    W; X; Y; Z\n    \n    edge [dir = back]\n    W->{X,Y}\n\n    edge [dir = forward]\n    {X Y}->Z\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 This fundamentally changes the conditioning set, which now _only_ contains `\(Y\)`.  
 
@@ -240,31 +241,27 @@ A collider variable blocks a backdoor path.  The counter-intuitive result is tha
 
 To identify the causal effect we need to block all backdoor paths from `\(X\)` to `\(Z\)`.  The _backdoor criterion_ can be defined as (Pearl, Glymour, &amp; Powell, 2016, p. 61):
 
-Given an ordered pair of variables `\((X,Y)\)` in a directed acyclic graph `\(G\)`, a set of variables `\(V\)` satisfies the backdoor criterion relative to `\((X,Y)\)` if no node in `\(V\)` is a descendant of `\(X\)`, and `\(V\)` blocks every path between `\(X\)` and `\(Y\)` that contains an arrow into `\(X\)`.
+&gt; Given an ordered pair of variables `\((X,Z)\)` in a directed acyclic graph `\(G\)`, a set of variables `\(V\)` satisfies the backdoor criterion relative to `\((X,Z)\)` if no node in `\(V\)` is a descendant of `\(X\)`, and `\(V\)` blocks every path between `\(X\)` and `\(Z\)` that contains an arrow into `\(X\)`.
 
 That is, we identify a set of nodes in `\(\{V\}\)` to condition on such that:
 
 1. We block all spurious paths from `\(X\)` to `\(Z\)`.
-2. We leave all directed paths from `\(X\)` to `\(Y\)` unperturbed.
+2. We leave all directed paths from `\(X\)` to `\(Z\)` unperturbed.
 3. We do not inadvertantly create new spurious paths via conditioning on colliders or their descendants.
-
-
-
-
 
 ---
 
 Another example is _mediation_, as in the following figure:
 
-<div id="htmlwidget-09b8764b60e8091a8b82" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09b8764b60e8091a8b82">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; Z\n\n    {X,M}->Z\n    X->M\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-42d12b52b8458a9e40a0" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-42d12b52b8458a9e40a0">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; Z\n\n    {X,M}->Z\n    X->M\n\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
-We can get the _direct effect_ of `\(X\)` on `\(Z\)` if we average over levels of `\(M\)`, which is the standard approach to mediation (the _indirect effect_ of `\(X\)` on `\(Z\)` through `\(M\)` is also identifiable depending on `\(f_z\)`.
+We can get the _direct effect_ of `\(X\)` on `\(Z\)` if we average over levels of `\(M\)`, which is the standard approach to mediation.
 
 But what if we add a variable as follows?:
 
-<div id="htmlwidget-25f627c527faa2e68a82" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-25f627c527faa2e68a82">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; W; Z\n\n    {X,M}->Z\n    X->M\n    W->{M,Z}\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5cdb1c54c659b53d3e0a" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5cdb1c54c659b53d3e0a">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; W; Z\n\n    {X,M}->Z\n    X->M\n    W->{M,Z}\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 Now `\(M\)` is a collider, and we know that conditioning on a collider causes problems. 
 ---
@@ -273,15 +270,15 @@ Conditioning on `\(M\)` opens the path `\(X \rightarrow M \leftarrow W \rightarr
 
 Not conditioning on `\(M\)` leaves the indirect path `\(X \rightarrow M \rightarrow Z\)` open.
 
-How do we deal with this in a manner that allows us to recover the direct effect of `\(X\)` on `\(Z\)`?  We now intervene on _both_ `\(X\)` and `\(W\)`.
+How do we deal with this in a manner that allows us to recover the direct effect of `\(X\)` on `\(Z\)`?  We now intervene on _both_ `\(X\)` and `\(M\)`.
 
-`\(P(Y=y \mid do(X = x), do(M = m))\)`.
+`\(P(Z=z \mid do(X = x), do(M = m))\)`.
 
 Intervening and conditioning are not the same thing.  Conditioning averages over values of `\(M\)`, intervening sets its value such that there are no longer the arrows `\(X \rightarrow M\)` and `\(W \rightarrow M\)`.  
 
 The _conditional direct effect_ is
 
-`\(CDE = P(Y=y \mid do(X = x), do(M = m)) - P(Y=y \mid do(X = x^{\prime}), do(M = m))\)`
+`\(CDE = P(Z=z \mid do(X = x), do(M = m)) - P(Z=z \mid do(X = x^{\prime}), do(M = m))\)`
 
 The _conditional_ refers to the fact that the direct effect `\(X \rightarrow Z\)` may differ depending on the value to which the mediator is set.
 
@@ -291,18 +288,18 @@ The `\(do(\cdot)\)` operator is equivalent to removing an arrow from a graph.
 
 Given:
 
-<div id="htmlwidget-cd162cb8be0e601a4e8d" style="width:288px;height:144px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cd162cb8be0e601a4e8d">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; W; Z\n\n    {X,M}->Z\n    X->M\n    W->{M,Z}\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2f76751d0f16730d4067" style="width:288px;height:144px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f76751d0f16730d4067">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext,\n          fontsize = 25]\n    X; M; W; Z\n\n    {X,M}->Z\n    X->M\n    W->{M,Z}\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
-There is no path to Gender, so `\(do(X) = x\)`, and the CDE is 
+There is no path to `\(X\)`, so `\(do(X) = x\)`, and the CDE is 
 
-`\(CDE = P(Y=y \mid X = x, do(M = m)) - P(Y=y \mid X = x^{\prime}, do(M = m))\)`.
+`\(CDE = P(Z=z \mid X = x, do(M = m)) - P(Z=z \mid X = x^{\prime}, do(M = m))\)`.
 
-The last step is to rewrite the `\(do(M = m)\)` in terms of the observed world.  To block the backdoor path `\(M \leftarrow W \rightarrow Z\)` we need to condition on `\(Z\)`.  We are left with:
+The last step is to rewrite the `\(do(M = m)\)` in terms of the observed world.  To block the backdoor path `\(M \leftarrow W \rightarrow Z\)` we need to condition on `\(W\)`.  We are left with:
 
 `$$\begin{eqnarray}
-CDE = \sum_i \left[P(Y=y \mid X = x, M = m, W = w) - \\
-  P(Y=y \mid X = x^{\prime}, M = m, W = w)\right]P(W = w) 
+CDE = \sum_i \left[P(Z=z \mid X = x, M = m, W = w) - \\
+  P(Z=z \mid X = x^{\prime}, M = m, W = w)\right]P(W = w) 
 \end{eqnarray}$$`
 
 ---
@@ -314,7 +311,7 @@ There is a general result behind this (Pearl, Glymour, &amp; Jewell, 2016, pg. 7
 The CDE of `\(X\)` on `\(Z\)` can be identified when a mediation variable `\(M\)` is present given:
 
 1. There exists a set `\(V_1\)` of variables that blocks all backdoor paths from `\(M\)` to `\(Z\)`.
-2. There exists a set `\(V_2\)` of variables that blocks all backdoor paths from `\(X\)` to `\(Z\)` after deleting all arrows entering `\(Z\)`.
+2. There exists a set `\(V_2\)` of variables that blocks all backdoor paths from `\(X\)` to `\(Z\)` after deleting all arrows entering `\(M\)`.
 
 The second of these was met automatically given the lack of parents for `\(X\)`.
 
@@ -324,12 +321,12 @@ These general rules make it possible to identify direct causal effects in contex
 
 These models are all very simple, but graphs can be far more complex. Consider the following (adapted from Morgan &amp; Winship, 2015, pg. 135):
 
-<div id="htmlwidget-79b50cb3a3c86a90a0c4" style="width:360px;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-79b50cb3a3c86a90a0c4">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-203e4792ff2e566a559c" style="width:360px;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-203e4792ff2e566a559c">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 A general approach to approaching these diagrams is to employ a tool called _d_-separation, defined as follows (Pearl, Glymour, &amp; Powell, 2016, p. 47):
 
-A path `\(p\)` is blocked by a set of nodes `\(Z\)` iif:
+A path `\(p\)` is blocked by a set of nodes `\(N\)` iif:
 1. `\(p\)` contains a chain of nodes `\(A \rightarrow B \rightarrow C\)` or fork `\(A \leftarrow B \rightarrow C\)` such that the middle node `\(B\)` is conditioned on, or
 2. `\(p\)` contains a collider `\(A \rightarrow B \leftarrow C\)` such that the collision node `\(B\)` is not conditioned on, nor are any descendents of `\(B\)` conditioned on.
 
@@ -400,36 +397,12 @@ Only the fourth is blocked by the collider at `\(T\)`.
 
 ---
 
-We wish to predict `\(Z\)` on the basis of `\(X\)`.  Do we remove all dependencies on `\(S\)` and `\(U\)` if we condition on `\(W\)`?
-
-
-```r
-dseparated(g, "X", "Z", list("S","U"))
-```
-
-```
-## [1] FALSE
-```
-
-What about conditioning on `\(V\)`?
-
-
-```r
-dseparated(g, "X", "Z", list("V"))
-```
-
-```
-## [1] FALSE
-```
-
-Dammit.  What set should I use for controls?
-
----
+We wish to predict `\(Z\)` on the basis of `\(X\)`.  Using the rules for `\(d\)`-separation to remove spurious dependencies, what set of variables can we condition on to get the true causal effect of `\(X\)` on `\(X\)`?
 
 
 ```r
 adjustmentSets(g, "X", "Z", type = "all") %&gt;% 
-  head(20)
+  head(15)
 ```
 
 ```
@@ -448,11 +421,6 @@ adjustmentSets(g, "X", "Z", type = "all") %&gt;%
 ##  { T, V, Y }
 ##  { S, T, V, Y }
 ##  { S, U, V, Y }
-##  { T, U, V, Y }
-##  { S, T, U, V, Y }
-##  { V, W, Y }
-##  { S, V, W, Y }
-##  { T, V, W, Y }
 ```
 
 ---
@@ -567,9 +535,11 @@ lm(Z ~ X, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term   estimate  std.error statistic       p.value
-## 1 (Intercept) 0.09385016 0.04995207  1.878804  6.056249e-02
-## 2           X 1.18958160 0.03693379 32.208493 1.257450e-156
+## # A tibble: 2 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0939    0.0500      1.88 6.06e-  2
+## 2 X             1.19      0.0369     32.2  1.26e-156
 ```
 
 That's NQR, the effect should be .8. What do we get if we also adjust on the collider `\(T\)`?
@@ -581,10 +551,12 @@ lm(Z ~ X + T, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term   estimate  std.error statistic       p.value
-## 1 (Intercept) 0.08408455 0.04556002  1.845578  6.524992e-02
-## 2           X 0.97448991 0.03691151 26.400703 6.780776e-117
-## 3           T 0.59694447 0.04190108 14.246519  4.683350e-42
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0841    0.0456      1.85 6.52e-  2
+## 2 X             0.974     0.0369     26.4  6.78e-117
+## 3 T             0.597     0.0419     14.2  4.68e- 42
 ```
 
 ---
@@ -599,11 +571,13 @@ lm(Z ~ X + S + V, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term   estimate  std.error statistic      p.value
-## 1 (Intercept) 0.06752448 0.04334012  1.558013 1.195478e-01
-## 2           X 0.80720846 0.04223633 19.111710 1.312465e-69
-## 3           S 0.09972285 0.04953881  2.013025 4.438072e-02
-## 4           V 0.77583188 0.04266538 18.184109 5.030910e-64
+## # A tibble: 4 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   0.0675    0.0433      1.56 1.20e- 1
+## 2 X             0.807     0.0422     19.1  1.31e-69
+## 3 S             0.0997    0.0495      2.01 4.44e- 2
+## 4 V             0.776     0.0427     18.2  5.03e-64
 ```
 
 
@@ -614,12 +588,14 @@ lm(Z ~ X + V + W + Y, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term   estimate  std.error  statistic       p.value
-## 1 (Intercept) 0.02268609 0.03221285  0.7042559  4.814382e-01
-## 2           X 0.80143412 0.02782790 28.7996633 3.809643e-133
-## 3           V 0.60169544 0.03218899 18.6925880  4.637372e-67
-## 4           W 0.57373311 0.02975644 19.2809739  1.245090e-70
-## 5           Y 0.58176844 0.02983814 19.4974741  5.869076e-72
+## # A tibble: 5 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0227    0.0322     0.704 4.81e-  1
+## 2 X             0.801     0.0278    28.8   3.81e-133
+## 3 V             0.602     0.0322    18.7   4.64e- 67
+## 4 W             0.574     0.0298    19.3   1.25e- 70
+## 5 Y             0.582     0.0298    19.5   5.87e- 72
 ```
 
 ---
@@ -631,12 +607,14 @@ lm(Z ~ X + U + V + W, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term   estimate  std.error statistic       p.value
-## 1 (Intercept) 0.05680506 0.03643038  1.559277  1.192487e-01
-## 2           X 0.79973390 0.03158910 25.316770 1.491394e-109
-## 3           U 0.33733142 0.03844625  8.774104  7.370071e-18
-## 4           V 0.58499040 0.03709975 15.768041  3.619781e-50
-## 5           W 0.55700912 0.03440553 16.189525  1.667641e-52
+## # A tibble: 5 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0568    0.0364      1.56 1.19e-  1
+## 2 X             0.800     0.0316     25.3  1.49e-109
+## 3 U             0.337     0.0384      8.77 7.37e- 18
+## 4 V             0.585     0.0371     15.8  3.62e- 50
+## 5 W             0.557     0.0344     16.2  1.67e- 52
 ```
 
 
@@ -646,12 +624,14 @@ lm(Z ~ X + T + U + V, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term  estimate  std.error statistic      p.value
-## 1 (Intercept) 0.0657324 0.04026925  1.632322 1.029280e-01
-## 2           X 0.8201700 0.03558798 23.046263 1.627295e-94
-## 3           T 0.2476193 0.04272077  5.796229 9.098255e-09
-## 4           U 0.3838625 0.04422408  8.679943 1.596665e-17
-## 5           V 0.5799905 0.04301084 13.484750 3.478802e-38
+## # A tibble: 5 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   0.0657    0.0403      1.63 1.03e- 1
+## 2 X             0.820     0.0356     23.0  1.63e-94
+## 3 T             0.248     0.0427      5.80 9.10e- 9
+## 4 U             0.384     0.0442      8.68 1.60e-17
+## 5 V             0.580     0.0430     13.5  3.48e-38
 ```
 
 ---
@@ -670,8 +650,8 @@ The second two can be explored using `dagitty`.
 
 Once again, take our model:
 
-<div id="htmlwidget-583bf534e359362c6cfb" style="width:360px;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-583bf534e359362c6cfb">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-23d7def17f01b97f35ea" style="width:360px;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-23d7def17f01b97f35ea">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 Let's say that we can't actually observe `\(W\)` or `\(Y\)`.  An old-school regressionista would say we are SOL.  A modern causal-aware practitioner would not.
 
@@ -722,9 +702,9 @@ A typical approach:
 - The effect of `\(X\)` on `\(Z\)` isn't signifcant, my dissertation (or publication needed for tenure) is a failure!
 - I know, I'll add a variable `\(M_1\)` between `\(X\)` and `\(Z\)`, maybe there's a mediated effect!
 - Damn, no mediated effect.  What if I add `\(M_2\)` and `\(M_3\)` to the model and keep moving around the directed arrows.
-- Hey, something is eventually significant!  I can graduate and start struggling to pay off my student loans while adjuncting at Mayville State University in North Dakota!
+- Hey, something is eventually significant!  
 
-In other words, these models are rife with p-hacking.
+In other words, these models are rife with `\(p\)`-hacking.
 
 ---
 
@@ -752,12 +732,16 @@ lm(W ~ V, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term estimate std.error statistic p.value
+## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 (Intercept)    0.017     0.035     0.485   0.628
-## 2           V    0.258     0.029     8.808   0.000
+## 2 V              0.258     0.029     8.81    0
 ```
 
 Controlling for `\(T\)` should render this association statistically indistinguishable from zero.
+
+---
 
 
 ```r
@@ -767,10 +751,12 @@ lm(W ~ V + T, data = g_tbl) %&gt;%
 ```
 
 ```
-##          term estimate std.error statistic p.value
+## # A tibble: 3 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 (Intercept)    0.016     0.031     0.522   0.602
-## 2           V    0.009     0.030     0.288   0.774
-## 3           T    0.485     0.030    16.159   0.000
+## 2 V              0.009     0.03      0.288   0.774
+## 3 T              0.485     0.03     16.2     0
 ```
 
 In fact, we can get all conditional independencies implied by the model.
@@ -824,12 +810,28 @@ At first, counterfactuals seem entirely intractable.  Think of a court case wher
 1. `\(Z_0\)`, the outcome when the person did not take the drug, i.e. `\(X = 0\)`.
 2. `\(Z_1\)`, the outcome when the person did take the drug, i.e. `\(X = 1\)`.
 
-The person took the drug and died, so we know `\(Z_1 = 1\)` ( `\(1\)` = death, `\(0\)` = no death).
+The person took the drug and died, so we know `\(Z_1 = 1\)` ($1$ = death, `\(0\)` = no death).
 
 The defense would like to know `\(P(Z_0 \mid X = 1, Y = 1)\)`.  But this seems like nonesense.  We want to know the probability of an event under one hypothetical world while conditioning on another world, the one we observed.  
 
 
 ---
+
+### Counterfactuals
+
+The solution relies on establishing an SCM that explicitly includes error terms.
+
+
+<div id="htmlwidget-2eae4886aa0c49f7a47e" style="width:360px;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2eae4886aa0c49f7a47e">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    X; Y; Z; UX; UY; UZ;\n\n    Y->Z\n    X->Y\n    UX -> X\n    UY -> Y\n    UZ -> Z\n    \n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+Each of the `\(U \in \{UX, UY, UZ\}\)` is an individual-specific value.  After fitting the model using the observed data, we can get these values for a specific person.
+
+We then alter the graph by setting the value of `\(X\)` or `\(Y\)` to the counterfactual value and solve for `\(Z\)` using the error term value identified by the full regression.
+
+---
+
+
 
 ### SCMs and ML
 
@@ -837,14 +839,11 @@ Pearl (2018) makes the audacious claim that current machine learning models cann
 
 A machine learning model takes a set of features `\(V = \{v_1, v_2, \ldots, v_k\}\)` and finds a function `\(f_z\)` mapping this set onto an outcome `\(Z\)`.  
 
-The ML practitioner says, "I can simulate a counterfactual by just changing `\(v_1\)` to `\(v_1^{\prime}\)`, and the treatment effect is `\(f_z - f_{z^{\prime}}\)`.
+Using variations on statistical modeling, this amounts to modeling the joint distribution of all variables. But a joint distribution _changes_ when we intervene on a variable.
 
-There are a lot of assumptions behind this statement that, if wrong, lead to the wrong conclusion.
+For example, if we are given a data set without knowing where it came from, we can fit a regression model using the joint distribution.  But we wouldn't know that `\(X\)` is randomized or not.
 
-In the simplest case, say that `\(f_z\)` is a linear regression model.  We saw in the previous example that our estimate of `\(Z\)` given a change from `\(X\)` to `\(X+1\)` was different depending on the conditioning set we used.  
-
-The proper conditioning set was determined by the causal ordering of variables.
-
+Causality requires knowing which conditional probabilities are invariant to changes in the structural model.  ML is blind to this.
 
 ---
 
@@ -874,8 +873,8 @@ At the same time, Pearl's dismissal of non-SCM approaches to modeling (potential
 
 Take, for example, our apparently complicated model:
 
-<div id="htmlwidget-8eeb117cc7025f61e68f" style="width:360px;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8eeb117cc7025f61e68f">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-26205e2604ba4d78bf6c" style="width:360px;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-26205e2604ba4d78bf6c">{"x":{"diagram":"\n  digraph {\n\n    graph [bgcolor = transparent,\n           rankdir = LR]\n    node [shape = plaintext]\n    S; T; U; V; W; X; Y; Z;\n\n    {V,W,X,Y}->Z\n    {S,V}->X\n    U->Y\n    T->V\n    T->W\n    {S,U}->T\n    \n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 ---
@@ -898,19 +897,20 @@ lm(Z ~ ., data = g_tbl) %&gt;%
 ```
 
 ```
-##          term    estimate  std.error  statistic       p.value
-## 1 (Intercept)  0.02358854 0.03220382  0.7324764  4.640509e-01
-## 2           X  0.81545435 0.03136324 26.0003226 4.544034e-114
-## 3           Y  0.56235184 0.03324766 16.9140272  1.391169e-56
-## 4           V  0.60440818 0.03492166 17.3075446  7.549167e-59
-## 5           W  0.58259242 0.03324343 17.5250416  4.110734e-60
-## 6           T -0.04660480 0.03948700 -1.1802570  2.381810e-01
-## 7           S -0.01057437 0.03977011 -0.2658875  7.903811e-01
-## 8           U  0.06917949 0.03954188  1.7495246  8.050960e-02
+## # A tibble: 8 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0236    0.0322     0.732 4.64e-  1
+## 2 X             0.815     0.0314    26.0   4.54e-114
+## 3 Y             0.562     0.0332    16.9   1.39e- 56
+## 4 V             0.604     0.0349    17.3   7.55e- 59
+## 5 W             0.583     0.0332    17.5   4.11e- 60
+## 6 T            -0.0466    0.0395    -1.18  2.38e-  1
+## 7 S            -0.0106    0.0398    -0.266 7.90e-  1
+## 8 U             0.0692    0.0395     1.75  8.05e-  2
 ```
 
 We didn't do too bad.  The problem, of course, is that there are SCMs that do not have all IVs or features as a proper adjustment set.  How bad our conclusions are will depend on how well our representation of reality is.
-
 
 ---
 
@@ -919,6 +919,8 @@ This, of course, begs the question of how we draw our SCM in the first place.
 When `\(\{V\}\)` is large, the possible set of connections may not all be clearly dictated by theory, and the number of possible combinations of arrows is two large to test via a grid-search.  
 
 These examples assume acyclicity, as due most of Pearl's introductory examples.  Observational data is rife with reverse causation.  Instrumental variables assist in simple situations, but what about bi-directional causality affecting variables needed to black a backdoor path?
+
+Not all models are identified, especially when stepping away from the world of linearity.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
@@ -959,7 +961,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

@@ -1,7 +1,7 @@
 ---
 title: "Causality"
 author: "Jeremy Albright"
-date: "July 13, 2018"
+date: "November 13, 2018"
 output:
   xaringan::moon_reader:
     css: ["mc-xaringan.css", "mc-xaringan-fonts.css"]
@@ -41,7 +41,7 @@ Statistics class in the 20th Century
  - But then, implicitly, suggest that the association is causal.
  - Example: Voters policy positions are _congruent_ with positions of parties.
     - Do parties respond to the demands of voters? (Think High School Civics-view of democracy)
-    - Do voters update their policy positions to match their preferred party (think of Fox News viewers evaluations of Russia)
+    - Do voters update their policy positions to match their preferred party (think of Fox News viewers evaluations of North Korea)
     - Who cares!?!?! The two seem to move together!  We have _congruence_!
     
 ---
@@ -101,9 +101,9 @@ The key assumption is $Y_{i0}, Y_{i1} \perp\!\!\!\perp D_i$.
 
 From Pearl (2018, pg. 279-280): 
 
-<blockquote>
-"Unfortunately, I have yet to find a single person who can explain what ignorability means in a language spoken by those who need to make this assumption or assess its plausibility in a given problem...If you think this sounds circular, I agree with you!"
-</blockquote>
+
+> "Unfortunately, I have yet to find a single person who can explain what ignorability means in a language spoken by those who need to make this assumption or assess its plausibility in a given problem...If you think this sounds circular, I agree with you!"
+
 
 ---
 
@@ -111,7 +111,7 @@ From Pearl (2018, pg. 279-280):
 
 A different orientation - though one that often leads to similar estimators - is attributed to Judea Pearl and based on _structural causal models_ (SCMs).
 
-SCMs are graphs with nodes, directed edges, and functions mappting exogenous variables to endogenous ones.  Denote $U$ as the set of exogenous variables, $V$ as the set of endogenous variables, and $F$ as the set of functions mapping $U$ to $V$.  
+SCMs are graphs with nodes, directed edges, and functions mapping exogenous variables to endogenous ones.  Denote $U$ as the set of exogenous variables, $V$ as the set of endogenous variables, and $F$ as the set of functions mapping $U$ to $V$.  
 
 A concrete example is:
 
@@ -144,7 +144,7 @@ grViz("
 
 ```
 
-The arrows represent association only, the actually function mapping $X$ and $Y$ onto $Z$ can be anything we like.
+The arrows represent a generic causal relationship only, the actual function mapping $X$ and $Y$ onto $Z$ can be anything we like.
 
 
 These types of figures should be familiar to anybody who has previously encounted structural equation models (SEMs) in applied statistics.  The primary difference is that SEMs are parametric, typically assuming a linear relationship: 
@@ -248,12 +248,13 @@ $P(Z = z \mid do(X = x))$
 
 Based on the intervention SCM,
 
-$P(Z = z \mid do(X = x)) = \sum_z P(Y = y \mid Y = y, X = x)P(Y = y)$
+$P(Z = z \mid do(X = x)) = \sum_z P(Z = z \mid Y = y, X = x)P(Y = y)$
 
 This is true because $P(Z = z \mid do(X = x))$ is what we get after integrating out $Y$.  
 
-But we know from comparing the graphs that $P(Y = y \mid Z = z, X = x)$ and $P(Y = y)$ are the same in both worlds.  Thus, we can identify the causal effect from a world with intervention by the data we get from the the actual world.
+But we know from comparing the graphs that $P(Z = z \mid Y = y, X = x)$ and $P(Y = y)$ are the same in both worlds.  Thus, we have all the information we need to calculate a causal effect such as.
 
+$P(Z = z \mid do(X = 1)) - P(Z = z \mid do(X = 0))$
 ---
 
 Take a slightly more complicated model:
@@ -283,7 +284,7 @@ grViz("
 There are now two paths from $X$ to $Z$:
 
 1. $X \rightarrow Z$
-2. $X \rightarrow W \leftarrow Z$
+2. $X \leftarrow W \rightarrow Y \rightarrow Z$
 
 These are read from left to right regardless of the direction of the arrows.  However, the arrows identify the second path as a _backdoor path_ because there is an arrow leading into $X$.  
 
@@ -342,17 +343,13 @@ A collider variable blocks a backdoor path.  The counter-intuitive result is tha
 
 To identify the causal effect we need to block all backdoor paths from $X$ to $Z$.  The _backdoor criterion_ can be defined as (Pearl, Glymour, & Powell, 2016, p. 61):
 
-Given an ordered pair of variables $(X,Y)$ in a directed acyclic graph $G$, a set of variables $V$ satisfies the backdoor criterion relative to $(X,Y)$ if no node in $V$ is a descendant of $X$, and $V$ blocks every path between $X$ and $Y$ that contains an arrow into $X$.
+> Given an ordered pair of variables $(X,Z)$ in a directed acyclic graph $G$, a set of variables $V$ satisfies the backdoor criterion relative to $(X,Z)$ if no node in $V$ is a descendant of $X$, and $V$ blocks every path between $X$ and $Z$ that contains an arrow into $X$.
 
 That is, we identify a set of nodes in $\{V\}$ to condition on such that:
 
 1. We block all spurious paths from $X$ to $Z$.
-2. We leave all directed paths from $X$ to $Y$ unperturbed.
+2. We leave all directed paths from $X$ to $Z$ unperturbed.
 3. We do not inadvertantly create new spurious paths via conditioning on colliders or their descendants.
-
-
-
-
 
 ---
 
@@ -377,7 +374,7 @@ grViz("
 
 ```
 
-We can get the _direct effect_ of $X$ on $Z$ if we average over levels of $M$, which is the standard approach to mediation (the _indirect effect_ of $X$ on $Z$ through $M$ is also identifiable depending on $f_z$.
+We can get the _direct effect_ of $X$ on $Z$ if we average over levels of $M$, which is the standard approach to mediation.
 
 But what if we add a variable as follows?:
 
@@ -408,15 +405,15 @@ Conditioning on $M$ opens the path $X \rightarrow M \leftarrow W \rightarrow Z$,
 
 Not conditioning on $M$ leaves the indirect path $X \rightarrow M \rightarrow Z$ open.
 
-How do we deal with this in a manner that allows us to recover the direct effect of $X$ on $Z$?  We now intervene on _both_ $X$ and $W$.
+How do we deal with this in a manner that allows us to recover the direct effect of $X$ on $Z$?  We now intervene on _both_ $X$ and $M$.
 
-$P(Y=y \mid do(X = x), do(M = m))$.
+$P(Z=z \mid do(X = x), do(M = m))$.
 
 Intervening and conditioning are not the same thing.  Conditioning averages over values of $M$, intervening sets its value such that there are no longer the arrows $X \rightarrow M$ and $W \rightarrow M$.  
 
 The _conditional direct effect_ is
 
-$CDE = P(Y=y \mid do(X = x), do(M = m)) - P(Y=y \mid do(X = x^{\prime}), do(M = m))$
+$CDE = P(Z=z \mid do(X = x), do(M = m)) - P(Z=z \mid do(X = x^{\prime}), do(M = m))$
 
 The _conditional_ refers to the fact that the direct effect $X \rightarrow Z$ may differ depending on the value to which the mediator is set.
 
@@ -446,15 +443,15 @@ grViz("
 
 ```
 
-There is no path to Gender, so $do(X) = x$, and the CDE is 
+There is no path to $X$, so $do(X) = x$, and the CDE is 
 
-$CDE = P(Y=y \mid X = x, do(M = m)) - P(Y=y \mid X = x^{\prime}, do(M = m))$.
+$CDE = P(Z=z \mid X = x, do(M = m)) - P(Z=z \mid X = x^{\prime}, do(M = m))$.
 
-The last step is to rewrite the $do(M = m)$ in terms of the observed world.  To block the backdoor path $M \leftarrow W \rightarrow Z$ we need to condition on $Z$.  We are left with:
+The last step is to rewrite the $do(M = m)$ in terms of the observed world.  To block the backdoor path $M \leftarrow W \rightarrow Z$ we need to condition on $W$.  We are left with:
 
 $$\begin{eqnarray}
-CDE = \sum_i \left[P(Y=y \mid X = x, M = m, W = w) - \\
-  P(Y=y \mid X = x^{\prime}, M = m, W = w)\right]P(W = w) 
+CDE = \sum_i \left[P(Z=z \mid X = x, M = m, W = w) - \\
+  P(Z=z \mid X = x^{\prime}, M = m, W = w)\right]P(W = w) 
 \end{eqnarray}$$
 
 ---
@@ -466,7 +463,7 @@ There is a general result behind this (Pearl, Glymour, & Jewell, 2016, pg. 77):
 The CDE of $X$ on $Z$ can be identified when a mediation variable $M$ is present given:
 
 1. There exists a set $V_1$ of variables that blocks all backdoor paths from $M$ to $Z$.
-2. There exists a set $V_2$ of variables that blocks all backdoor paths from $X$ to $Z$ after deleting all arrows entering $Z$.
+2. There exists a set $V_2$ of variables that blocks all backdoor paths from $X$ to $Z$ after deleting all arrows entering $M$.
 
 The second of these was met automatically given the lack of parents for $X$.
 
@@ -500,7 +497,7 @@ grViz("
 
 A general approach to approaching these diagrams is to employ a tool called _d_-separation, defined as follows (Pearl, Glymour, & Powell, 2016, p. 47):
 
-A path $p$ is blocked by a set of nodes $Z$ iif:
+A path $p$ is blocked by a set of nodes $N$ iif:
 1. $p$ contains a chain of nodes $A \rightarrow B \rightarrow C$ or fork $A \leftarrow B \rightarrow C$ such that the middle node $B$ is conditioned on, or
 2. $p$ contains a collider $A \rightarrow B \leftarrow C$ such that the collision node $B$ is not conditioned on, nor are any descendents of $B$ conditioned on.
 
@@ -562,30 +559,12 @@ Only the fourth is blocked by the collider at $T$.
 
 ---
 
-We wish to predict $Z$ on the basis of $X$.  Do we remove all dependencies on $S$ and $U$ if we condition on $W$?
-
-```{r}
-
-dseparated(g, "X", "Z", list("S","U"))
-
-```
-
-What about conditioning on $V$?
-
-```{r}
-
-dseparated(g, "X", "Z", list("V"))
-
-```
-
-Dammit.  What set should I use for controls?
-
----
+We wish to predict $Z$ on the basis of $X$.  Using the rules for $d$-separation to remove spurious dependencies, what set of variables can we condition on to get the true causal effect of $X$ on $X$?
 
 ```{r}
 
 adjustmentSets(g, "X", "Z", type = "all") %>% 
-  head(20)
+  head(15)
 
 ```
 
@@ -793,9 +772,9 @@ A typical approach:
 - The effect of $X$ on $Z$ isn't signifcant, my dissertation (or publication needed for tenure) is a failure!
 - I know, I'll add a variable $M_1$ between $X$ and $Z$, maybe there's a mediated effect!
 - Damn, no mediated effect.  What if I add $M_2$ and $M_3$ to the model and keep moving around the directed arrows.
-- Hey, something is eventually significant!  I can graduate and start struggling to pay off my student loans while adjuncting at Mayville State University in North Dakota!
+- Hey, something is eventually significant!  
 
-In other words, these models are rife with p-hacking.
+In other words, these models are rife with $p$-hacking.
 
 ---
 
@@ -824,6 +803,8 @@ lm(W ~ V, data = g_tbl) %>%
 ```
 
 Controlling for $T$ should render this association statistically indistinguishable from zero.
+
+---
 
 ```{r}
 
@@ -862,12 +843,47 @@ At first, counterfactuals seem entirely intractable.  Think of a court case wher
 1. $Z_0$, the outcome when the person did not take the drug, i.e. $X = 0$.
 2. $Z_1$, the outcome when the person did take the drug, i.e. $X = 1$.
 
-The person took the drug and died, so we know $Z_1 = 1$ ( $1$ = death, $0$ = no death).
+The person took the drug and died, so we know $Z_1 = 1$ ($1$ = death, $0$ = no death).
 
 The defense would like to know $P(Z_0 \mid X = 1, Y = 1)$.  But this seems like nonesense.  We want to know the probability of an event under one hypothetical world while conditioning on another world, the one we observed.  
 
 
 ---
+
+### Counterfactuals
+
+The solution relies on establishing an SCM that explicitly includes error terms.
+
+
+```{r, echo = FALSE, fig.width = 5, fig.height=3}
+
+grViz("
+  digraph {
+
+    graph [bgcolor = transparent,
+           rankdir = LR]
+    node [shape = plaintext]
+    X; Y; Z; UX; UY; UZ;
+
+    Y->Z
+    X->Y
+    UX -> X
+    UY -> Y
+    UZ -> Z
+    
+    
+  }")
+
+
+```
+
+Each of the $U \in \{UX, UY, UZ\}$ is an individual-specific value.  After fitting the model using the observed data, we can get these values for a specific person.
+
+We then alter the graph by setting the value of $X$ or $Y$ to the counterfactual value and solve for $Z$ using the error term value identified by the full regression.
+
+---
+
+
 
 ### SCMs and ML
 
@@ -875,14 +891,11 @@ Pearl (2018) makes the audacious claim that current machine learning models cann
 
 A machine learning model takes a set of features $V = \{v_1, v_2, \ldots, v_k\}$ and finds a function $f_z$ mapping this set onto an outcome $Z$.  
 
-The ML practitioner says, "I can simulate a counterfactual by just changing $v_1$ to $v_1^{\prime}$, and the treatment effect is $f_z - f_{z^{\prime}}$.
+Using variations on statistical modeling, this amounts to modeling the joint distribution of all variables. But a joint distribution _changes_ when we intervene on a variable.
 
-There are a lot of assumptions behind this statement that, if wrong, lead to the wrong conclusion.
+For example, if we are given a data set without knowing where it came from, we can fit a regression model using the joint distribution.  But we wouldn't know that $X$ is randomized or not.
 
-In the simplest case, say that $f_z$ is a linear regression model.  We saw in the previous example that our estimate of $Z$ given a change from $X$ to $X+1$ was different depending on the conditioning set we used.  
-
-The proper conditioning set was determined by the causal ordering of variables.
-
+Causality requires knowing which conditional probabilities are invariant to changes in the structural model.  ML is blind to this.
 
 ---
 
@@ -954,7 +967,6 @@ lm(Z ~ ., data = g_tbl) %>%
 
 We didn't do too bad.  The problem, of course, is that there are SCMs that do not have all IVs or features as a proper adjustment set.  How bad our conclusions are will depend on how well our representation of reality is.
 
-
 ---
 
 This, of course, begs the question of how we draw our SCM in the first place.
@@ -963,7 +975,7 @@ When $\{V\}$ is large, the possible set of connections may not all be clearly di
 
 These examples assume acyclicity, as due most of Pearl's introductory examples.  Observational data is rife with reverse causation.  Instrumental variables assist in simple situations, but what about bi-directional causality affecting variables needed to black a backdoor path?
 
-
+Not all models are identified, especially when stepping away from the world of linearity.
 
 
 
